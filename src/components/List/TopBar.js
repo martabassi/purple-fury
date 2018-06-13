@@ -4,7 +4,7 @@ class TopBar extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <h2>Marta</h2>
+        <h2>{this.props.username}</h2>
       </div>
     );
   }
