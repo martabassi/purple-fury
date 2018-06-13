@@ -65,7 +65,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Users className="Users" />
+        <Users className="Users" username={this.state.username} />
         <List className="List" messages={this.state.messages} />
         <TopBar className="TopBar" username={this.state.username} />
         <Form

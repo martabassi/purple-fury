@@ -1,27 +1,13 @@
 import React, { Component } from 'react';
-
+import User from './User';
 class Users extends Component {
   render() {
+    console.log(this.props.username);
     return (
       <div className={this.props.className}>
-
-          <div className="users" >          
-          <div className="fotoUser">
-          </div>
-          Marta
-          </div>
-      
-          <div className="users" >    
-          <div className="fotoUser">
-          </div>
-          Katia
-          </div>
-
-          <div className="users" >          
-          <div className="fotoUser">
-          </div>
-          Vincenzo
-          </div>
+        {this.props.username.map((user, i) => {
+          return <User user={user} key={i} />;
+        })}
       </div>
     );
   }
