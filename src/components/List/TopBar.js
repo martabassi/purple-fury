@@ -5,6 +5,7 @@ class TopBar extends Component {
     return (
       <div className={this.props.className}>
         <h2>{this.props.username}</h2>
+        <h5>Ultimo accesso alle 11.40 </h5>
       </div>
     );
   }

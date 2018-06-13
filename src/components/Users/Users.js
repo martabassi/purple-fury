@@ -4,11 +4,24 @@ class Users extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <ul>
-          <li> Marta</li>
-          <li> Katia</li>
-          <li> Vincenzo</li>
-        </ul>
+
+          <div className="users" >          
+          <div className="fotoUser">
+          </div>
+          Marta
+          </div>
+      
+          <div className="users" >    
+          <div className="fotoUser">
+          </div>
+          Katia
+          </div>
+
+          <div className="users" >          
+          <div className="fotoUser">
+          </div>
+          Vincenzo
+          </div>
       </div>
     );
   }
