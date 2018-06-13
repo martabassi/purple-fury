@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import openSocket from 'socket.io-client';
 
 class Form extends Component {
   render() {
     return (
       <form action="" className={this.props.className}>
-        <input onChange={this.onChange} name="message" autocomplete="off" />
-        <button onClick={this.onSubmit}>Send</button>
+        <input
+          onChange={this.props.onChange}
+          value={this.props.value}
+          name="message"
+          autocomplete="off"
+        />
+        <button onClick={this.props.onClick}>Send</button>
       </form>
     );
   }

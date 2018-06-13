@@ -4,7 +4,15 @@ class List extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <ul id="messages" />
+        <ul>
+          {this.props.messages.map(message => {
+            return (
+              <li key={message._id}>
+                {message.username}: {message.message}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
