@@ -40,13 +40,14 @@ class App extends Component {
 
   onMessageReceived(data) {
     console.log('from-socket', data);
-    this.setState({ messages: this.state.messages.concat([data]) });
+    this.setState({ messages: this.state.messages.concat([data]), value: '' });
   }
   onChange = e => {
     this.setState({
       value: e.target.value
     });
   };
+
   sendMessage(e, message) {
     e.preventDefault();
     fetch('https://purple-fury.now.sh/messages', {

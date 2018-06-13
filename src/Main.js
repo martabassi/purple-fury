@@ -34,7 +34,6 @@ class Main extends Component {
                 onChange={e => this.onChange(e)}
                 onSubmit={e => this.onSubmit(e)}
                 username={this.state.username}
-                password={this.state.password}
                 logged={this.state.logged}
               />
             )}

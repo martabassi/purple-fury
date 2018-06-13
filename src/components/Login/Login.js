@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
 class Login extends Component {
   render() {
@@ -13,13 +14,6 @@ class Login extends Component {
             type="text"
             value={this.props.username}
             placeholder="choose you username"
-            onChange={this.props.onChange}
-          />
-          <input
-            name="password"
-            value={this.props.password}
-            type="text"
-            placeholder="choose your password"
             onChange={this.props.onChange}
           />
           <input type="submit" onSubmit={this.props.onSubmit} />
