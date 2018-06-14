@@ -7,11 +7,6 @@ class List extends Component {
   }
 
   render() {
-    console.log(
-      'CICCIAAAAAAAAAAAA',
-      this.props.roomClicked,
-      this.props.messages
-    );
     return (
       <div className={this.props.className}>
         <ul>

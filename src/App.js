@@ -147,6 +147,13 @@ class App extends Component {
     this.setState({ messages: this.state.messages.concat([data]) });
   }
 
+  onSubmit = e => {
+    let check = e.target.value;
+    if(check.includes('#')===true) {
+      alert('Trovato hashtag!')
+    }
+  }
+
   onChange = e => {
     this.setState({
       value: e.target.value
@@ -216,6 +223,7 @@ class App extends Component {
             room={this.state.rooms}
             value={this.state.value}
             onChange={this.onChange}
+            onSubmit={this.onSubmit}
             onClick={e => this.sendMessage(e, this.state.value)}
           />
           <TodoList

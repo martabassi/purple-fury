@@ -7,7 +7,7 @@ const LoginForm = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
   h1 {
-    color: #034561;
+    color: #FFF;
     text-align: center;
     margin: 40px;
     font: 50px 'Montserrat', sans-serif;
@@ -16,7 +16,7 @@ const LoginForm = styled.div`
 
   border: none;
   height: 100vh;
-  background: #00a89f;
+  background: linear-gradient(to right, #00a89f 1%,#034561 19%,#034561 84%,#00a89f 100%);
   padding-top: 100px;
   form {
     padding: 10px;
@@ -45,11 +45,11 @@ const LoginForm = styled.div`
       }
     }
     input::placeholder {
-      color: #2c6d7c;
+      color: #FFF;
     }
 
     p {
-      color: #034561;
+      color: #FFF;
       font: 20px 'Montserrat', sans-serif;
       margin-bottom: 30px;
       text-align: center;
@@ -58,11 +58,9 @@ const LoginForm = styled.div`
 `;
 class Login extends Component {
   render() {
-    console.log(this.props);
     return (
       <LoginForm>
         <h1>Welcome To Purple Fury!</h1>
-
         <form onSubmit={this.props.onSubmit}>
           <p>Choose your nickname to start the chat!</p>
           <div>
@@ -72,6 +70,7 @@ class Login extends Component {
               value={this.props.username}
               placeholder="choose you username"
               onChange={this.props.onChange}
+              className='login'
             />
           </div>
           <input className="inviaLogin" type="submit" value="Submit" />

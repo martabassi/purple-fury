@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 
 class TodoList extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="TodoList">
         <h2
           style={{
-            color: '#636e72',
+            color: '#FFF',
             fontWeight: 'lighter',
             paddingBottom: '10px'
           }}
@@ -19,7 +18,6 @@ class TodoList extends Component {
           <ul>
             {this.props.messages !== [] && this.props.logged === true
               ? this.props.messages.map(el => {
-                  console.log(this.props.messages);
                   return <li>{el.username}</li>;
                 })
               : ''}

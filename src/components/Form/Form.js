@@ -5,6 +5,7 @@ class Form extends Component {
     return (
       <form action="" className={this.props.className}>
         <input
+          onBlur={this.props.onSubmit}
           onChange={this.props.onChange}
           value={this.props.value}
           name="message"

@@ -25,6 +25,10 @@ form input {
   border-radius: 8px 8px 8px 8px;
 }
 
+.login {
+  color: #FFF;
+}
+
 form input:focus {
   border: 1px solid #004562;
   outline: none;
@@ -214,12 +218,16 @@ i {
 small {
   color: #adadad;
   display: block;
+  text-align: right;
   font-weight: lighter;
   margin-left: '10px';
   margin-right: '2px';
 }
-
+  
 .online {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto;
   background-color: #0045628a;
   border-radius: 8px;
 }
@@ -227,7 +235,7 @@ small {
 .inviaLogin {
   background-color: transparent;
   border: 1px solid rgb(230, 230, 230);
-  color: #034561;
+  color: #FFF;
   font: 13px 'Montserrat', sans-serif;
 }
 
@@ -259,4 +267,24 @@ small {
   flex-direction: column;
   background-color: white;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+ul::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+ul::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: transparent;
+}
+
+ul::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #006f7e;
 }
