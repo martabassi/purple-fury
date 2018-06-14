@@ -6,7 +6,6 @@ class Rooms extends Component {
   };
 
   render() {
-    console.log('ROOMS', this.props);
     return (
       <div className="Rooms">
         <div className="RoomTitle">
@@ -28,6 +27,7 @@ class Rooms extends Component {
           ''
         )}
         <div className="RoomsGroup">
+        <ul>
           {this.props.rooms !== undefined
             ? this.props.rooms.map(room => {
                 return (
@@ -40,6 +40,7 @@ class Rooms extends Component {
                 );
               })
             : ''}
+          </ul>
         </div>
 
         {/* <p>{this.props.roomName}</p> */}
