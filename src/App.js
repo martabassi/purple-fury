@@ -15,11 +15,13 @@ class App extends Component {
     messages: [],
     value: '',
     roomName: '',
-    rooms: []
+    rooms: [],
+    roomClicked: '',
+    selectedMsg: [],
+    notify: ''
   };
   componentDidMount() {
     var self = this;
-
     fetch('https://purple-fury.now.sh/messages', {
       method: 'post',
       headers: {
@@ -42,6 +44,7 @@ class App extends Component {
         });
       });
     this.fetchRooms();
+
     fetch(`https://purple-fury.now.sh/users?token=${this.props.token}`, {
       method: 'GET',
       headers: {
@@ -51,13 +54,9 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.users[0]);
-        self.setState(
-          {
-            users: res.users
-          },
-          console.log(this.state.username)
-        );
+        self.setState({
+          users: res.users
+        });
       });
   }
   createRoom = e => {
@@ -66,7 +65,44 @@ class App extends Component {
       roomName: e.target.value
     });
   };
+  displayRoom = e => {
+    this.setState(
+      {
+        roomClicked: e.target.name
+      },
+      console.log('ROOMCLICKED', this.state.roomClicked)
+    );
+    if (this.state.roomClicked) {
+      this.postMessageToRoom();
+    }
+  };
 
+  postMessageToRoom = () => {
+    var self = this;
+    console.log('STANZAA NELLA FETCH', self.state.roomClicked);
+    fetch(
+      `https://purple-fury.now.sh/rooms/${
+        this.state.roomClicked
+      }/messages?token=${this.props.token}`,
+      {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.messages);
+        self.setState(
+          {
+            selectedMsg: res.messages
+          },
+          console.log(this.state.selectedMsg)
+        );
+      });
+  };
   postRoomsonServer = e => {
     e.preventDefault();
     fetch('https://purple-fury.now.sh/rooms', {
@@ -79,7 +115,8 @@ class App extends Component {
         room: this.state.rooms,
         token: this.state.token,
         name: this.state.roomName,
-        topic: 'the most beautiful topic'
+        topic: 'the most beautiful topic',
+        username: this.props.username
       })
     })
       .then(res => res.json())
@@ -99,6 +136,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
+        console.log(res);
         this.setState({
           rooms: res.rooms
         });
@@ -125,42 +163,67 @@ class App extends Component {
       },
       body: JSON.stringify({
         token: this.state.token,
-        message: message
+        message: message,
+        room: this.state.roomClicked
       })
+    });
+
+    this.setState({
+      value: ''
     });
   }
   render() {
+    console.log('SELECTED MSG', this.state.selectedMsg);
     return (
       <div className="App">
         <div className="wrapper">
           <Users
             className="Users"
+            selected={
+              this.state.roomClicked !== '' ? this.state.roomClicked : ''
+            }
             onChange={e => this.createRoom(e)}
             onSubmit={this.postRoomsonServer}
+            messages={
+              this.state.selectedMsg !== [] ? this.state.selectedMsg : ''
+            }
             rooms={this.state.rooms}
             users={this.state.users !== [] ? this.state.users : ''}
+            onClick={this.displayRoom}
             username={this.props.username}
             roomName={this.state.roomName}
           />
           <List
             className="List"
             username={this.props.username}
-            messages={this.state.messages}
+            messages={this.state.messages !== [] ? this.state.messages : ''}
+            roomClicked={
+              this.state.roomClicked !== '' ? this.state.roomClicked : ''
+            }
           />
           <TopBar
             className="TopBar"
             username={this.state.username}
             logged={this.props.logged}
+            messages={
+              this.state.roomClicked !== '' ? this.state.roomClicked : ''
+            }
             onClick={this.props.onClick}
           />
           <Form
             className="Form"
             user={this.state.users}
             room={this.state.rooms}
+            value={this.state.value}
             onChange={this.onChange}
             onClick={e => this.sendMessage(e, this.state.value)}
           />
-          <TodoList />
+          <TodoList
+            logged={this.props.logged}
+            messages={
+              this.state.selectedMsg !== [] ? this.state.selectedMsg : ''
+            }
+          />
         </div>
       </div>
     );

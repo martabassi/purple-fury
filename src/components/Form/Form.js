@@ -10,7 +10,7 @@ class Form extends Component {
           name="message"
           autocomplete="off"
         />
-        <button onClick={this.props.onClick}>Send</button>
+        <button onChange={this.props.onClick}>Send</button>
       </form>
     );
   }

@@ -9,20 +9,28 @@ class User extends Component {
             <div className="fotoUser">{this.props.username[0]}</div>
             {this.props.username}
           </li>
-          {this.props.user.map(us => {
-            console.log(us.isConnected);
-            return (
-              <li
-                className={classnames('usersList', {
-                  online: us.isConnected
-                })}
-              >
-                <div className="fotoUser">{us.username[0]}</div>
-                {us.username}
-                {us.isConnected == true ? <small>online</small> : ''}
-              </li>
-            );
-          })}
+          {this.props.selected === ''
+            ? this.props.user.map(us => {
+                return (
+                  <li
+                    className={classnames('usersList', {
+                      online: us.isConnected
+                    })}
+                  >
+                    <div className="fotoUser">{us.username[0]}</div>
+                    {us.username}
+                    {us.isConnected == true ? <small>online</small> : ''}
+                  </li>
+                );
+              })
+            : this.props.messages.map(user => {
+                return (
+                  <li className="usersList">
+                    <div className="fotoUser">{user.username[0]}</div>
+                    {user.username}
+                  </li>
+                );
+              })}
         </ul>
       </div>
     );

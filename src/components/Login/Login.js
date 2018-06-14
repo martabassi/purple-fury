@@ -4,17 +4,19 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 const LoginForm = styled.div`
+  @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
   h1 {
-    color: white;
+    color: #034561;
     text-align: center;
     margin: 40px;
-    font-size: 50px;
+    font: 50px 'Montserrat', sans-serif;
     font-weight: lighter;
   }
 
   border: none;
   height: 100vh;
-  background: rgb(0, 154, 181);
+  background: #00a89f;
   padding-top: 100px;
   form {
     padding: 10px;
@@ -28,20 +30,27 @@ const LoginForm = styled.div`
     border-top-left-radius: 28px;
     border-bottom-right-radius: 28px;
     text-align: center;
+
     input:first-child {
+      font: 13px 'Montserrat', sans-serif;
+      border: none;
+      border-radius: 0px;
+      text-align: center;
       border-bottom: 1px solid white;
       background-color: transparent;
       margin-bottom: 20px;
+
       :focus {
         outline: none;
       }
     }
     input::placeholder {
-      color: white;
+      color: #2c6d7c;
     }
+
     p {
-      color: white;
-      font-size: 16px;
+      color: #034561;
+      font: 20px 'Montserrat', sans-serif;
       margin-bottom: 30px;
       text-align: center;
     }
@@ -65,7 +74,7 @@ class Login extends Component {
               onChange={this.props.onChange}
             />
           </div>
-          <input type="submit" onSubmit={this.props.onSubmit} />
+          <input className="inviaLogin" type="submit" value="Submit" />
           {this.props.logged && this.props.token !== '' ? (
             <Redirect to="/chat" />
           ) : null}

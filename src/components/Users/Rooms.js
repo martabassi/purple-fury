@@ -4,7 +4,9 @@ class Rooms extends Component {
   state = {
     clicked: false
   };
+
   render() {
+    console.log('ROOMS', this.props);
     return (
       <div className="Rooms">
         <div className="RoomTitle">
@@ -15,8 +17,12 @@ class Rooms extends Component {
         </div>
 
         {this.state.clicked === true ? (
-          <form onSubmit={this.props.onSubmit}>
-            <input type="text" onChange={this.props.onChange} />
+          <form className="formRooms" onSubmit={this.props.onSubmit}>
+            <input
+              className="inputRooms"
+              type="text"
+              onChange={this.props.onChange}
+            />
           </form>
         ) : (
           ''
@@ -24,11 +30,12 @@ class Rooms extends Component {
         <div className="RoomsGroup">
           {this.props.rooms !== undefined
             ? this.props.rooms.map(room => {
-                console.log(this.props.rooms);
                 return (
                   <div className="room" style={{ color: 'white' }}>
                     <div className="fotoRoom" />
-                    {room.name}
+                    <a name={room.name} onClick={this.props.onClick}>
+                      {room.name}
+                    </a>
                   </div>
                 );
               })

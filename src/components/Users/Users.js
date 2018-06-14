@@ -15,11 +15,17 @@ class Users extends Component {
           USERS
         </h2>
         <hr />
-        <User user={this.props.users} username={this.props.username} />
+        <User
+          user={this.props.users}
+          messages={this.props.messages}
+          username={this.props.username}
+          selected={this.props.selected}
+        />
         <Rooms
           roomName={this.props.roomName}
           rooms={this.props.rooms}
           onChange={this.props.onChange}
+          onClick={this.props.onClick}
           onSubmit={this.props.onSubmit}
         />
       </div>
