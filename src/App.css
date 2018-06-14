@@ -101,7 +101,7 @@ i {
 }
 
 .User {
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 .TopBar {
   grid-row: 1/2;
@@ -135,7 +135,6 @@ i {
 }
 
 .users {
- 
   /* grid-row: 3/4;
   grid-column: 2/3; */
   color: white;
@@ -149,7 +148,6 @@ i {
   font-family: 'Montserrat', sans-serif;
 }
 
-
 .fotoUser {
   width: 30px;
   height: 30px;
@@ -157,7 +155,7 @@ i {
   border-radius: 8px 8px 8px 0px;
   margin-right: 10px;
   text-align: center;
-  font: 25px 'Montserrat', sans-serif; 
+  font: 25px 'Montserrat', sans-serif;
   text-transform: capitalize;
 }
 
@@ -168,14 +166,14 @@ i {
   border-radius: 8px 8px 8px 0px;
   margin-right: 10px;
   text-align: center;
-  font: 24px 'Montserrat', sans-serif; 
+  font: 24px 'Montserrat', sans-serif;
   text-transform: capitalize;
 }
 .RoomsGroup {
   height: 200px;
   overflow-y: auto;
 }
-.room{
+.room {
   color: white;
   display: flex;
   padding: 10px 0px 10px 0px;
@@ -188,7 +186,6 @@ i {
 .RoomTitle {
   display: flex;
   justify-content: space-between;
-  
 }
 .RoomTitle i {
   font-size: 20px;
@@ -201,4 +198,14 @@ i {
 .usersList div {
   display: inline-block;
   margin: 10px;
+}
+
+small {
+  color: #adadad;
+  display: block;
+  font-weight: lighter;
+}
+
+.online {
+  background-color: red;
 }

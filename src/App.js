@@ -139,7 +139,7 @@ class App extends Component {
             onSubmit={this.postRoomsonServer}
             rooms={this.state.rooms}
             users={this.state.users !== [] ? this.state.users : ''}
-            username={this.state.username}
+            username={this.props.username}
             roomName={this.state.roomName}
           />
           <List
@@ -155,6 +155,8 @@ class App extends Component {
           />
           <Form
             className="Form"
+            user={this.state.users}
+            room={this.state.rooms}
             onChange={this.onChange}
             onClick={e => this.sendMessage(e, this.state.value)}
           />
