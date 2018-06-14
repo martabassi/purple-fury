@@ -8,11 +8,19 @@ import Users from './components/Users/Users';
 import TodoList from './components/Todo/TodoList';
 
 class App extends Component {
-  state = { username: [], token: [], messages: [], value: '', rooms: [] };
+  state = {
+    username: this.props.username,
+    users: [],
+    token: this.props.token,
+    messages: [],
+    value: '',
+    roomName: '',
+    rooms: []
+  };
   componentDidMount() {
     var self = this;
 
-    fetch('https://purple-fury.now.sh/login', {
+    fetch('https://purple-fury.now.sh/messages', {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -25,31 +33,82 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        self.setState({
-          token: res.token,
-          value: '',
-          username: this.state.username.concat(res.username)
-        });
         const socket = openSocket(
-          `https://purple-fury.now.sh/?token=${res.token}`
+          `https://purple-fury.now.sh/?token=${this.props.token}`
         );
         socket.on('messages', data => {
           console.log(data);
           self.onMessageReceived(data);
-          self.onRoomCreated(data);
         });
       });
+    this.fetchRooms();
+    fetch(`https://purple-fury.now.sh/users?token=${this.props.token}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.users[0]);
+        self.setState(
+          {
+            users: res.users
+          },
+          console.log(this.state.username)
+        );
+      });
   }
+  createRoom = e => {
+    e.preventDefault();
+    this.setState({
+      roomName: e.target.value
+    });
+  };
 
+  postRoomsonServer = e => {
+    e.preventDefault();
+    fetch('https://purple-fury.now.sh/rooms', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        room: this.state.rooms,
+        token: this.state.token,
+        name: this.state.roomName,
+        topic: 'the most beautiful topic'
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        const socket = openSocket(
+          `https://purple-fury.now.sh/?token=${this.props.token}`
+        );
+      }, this.fetchRooms());
+  };
+  fetchRooms = () => {
+    fetch(`https://purple-fury.now.sh/rooms?token=${this.props.token}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          rooms: res.rooms
+        });
+      });
+  };
   onMessageReceived(data) {
     console.log('from-socket', data);
     this.setState({ messages: this.state.messages.concat([data]) });
-    console.log(this.state.messages);
   }
-  onRoomCreated(data) {
-    console.log('from-socket', data.room);
-    this.setState({ room: this.state.rooms.concat(data.room) });
-  }
+
   onChange = e => {
     this.setState({
       value: e.target.value
@@ -76,15 +135,24 @@ class App extends Component {
         <div className="wrapper">
           <Users
             className="Users"
-            room={this.state.messages}
+            onChange={e => this.createRoom(e)}
+            onSubmit={this.postRoomsonServer}
+            rooms={this.state.rooms}
+            users={this.state.users !== [] ? this.state.users : ''}
             username={this.state.username}
+            roomName={this.state.roomName}
           />
           <List
             className="List"
             username={this.props.username}
             messages={this.state.messages}
           />
-          <TopBar className="TopBar" username={this.state.username} />
+          <TopBar
+            className="TopBar"
+            username={this.state.username}
+            logged={this.props.logged}
+            onClick={this.props.onClick}
+          />
           <Form
             className="Form"
             onChange={this.onChange}

@@ -5,23 +5,49 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class Main extends Component {
   state = {
-    logged: false
+    logged: false,
+    username: '',
+    token: ''
+  };
+
+  fetcha = () => {
+    const self = this;
+    fetch('https://purple-fury.now.sh/login', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: self.state.username,
+        password: 'secret'
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        self.setState({
+          token: res.token
+        });
+      });
   };
 
   onChange = e => {
-    console.log('ciccia');
     this.setState({
-      [e.target.name]: e.target.value
+      username: e.target.value
     });
   };
 
   onSubmit = e => {
     e.preventDefault();
+    this.fetcha();
+    console.log(this.state.token);
+    this.changeLogged();
+  };
+  changeLogged = e => {
     this.setState({
-      logged: true
+      logged: !this.state.logged
     });
   };
-
   render() {
     return (
       <Router>
@@ -35,6 +61,7 @@ class Main extends Component {
                 onSubmit={e => this.onSubmit(e)}
                 username={this.state.username}
                 logged={this.state.logged}
+                token={this.state.token}
               />
             )}
           />
@@ -43,8 +70,10 @@ class Main extends Component {
             path="/chat"
             render={props => (
               <App
+                token={this.state.token}
                 username={this.state.username}
-                password={this.state.password}
+                logged={this.state.logged}
+                onClick={this.changeLogged}
               />
             )}
           />

@@ -10,8 +10,9 @@ class TopBar extends Component {
           <h2>{this.props.username}</h2>
           <h5>Last access {moment().format('MMMM Do YYYY, h:mm:ss a')} </h5>
         </div>
+
         <Link to="/">
-          <i className="fa fa-sign-out-alt" />
+          <i className="fa fa-sign-out-alt" onClick={this.props.onClick} />
         </Link>
       </div>
     );

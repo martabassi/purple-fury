@@ -3,7 +3,6 @@ import User from './User';
 import Rooms from './Rooms';
 class Users extends Component {
   render() {
-    console.log(this.props.room);
     return (
       <div className={this.props.className}>
         <h2
@@ -16,10 +15,13 @@ class Users extends Component {
           USERS
         </h2>
         <hr />
-        {this.props.username.map((user, i) => {
-          return <User user={user} key={i} />;
-        })}
-        <Rooms />
+        <User user={this.props.users} username={this.props.username} />
+        <Rooms
+          roomName={this.props.roomName}
+          rooms={this.props.rooms}
+          onChange={this.props.onChange}
+          onSubmit={this.props.onSubmit}
+        />
       </div>
     );
   }

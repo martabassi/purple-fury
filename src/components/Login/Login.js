@@ -66,7 +66,9 @@ class Login extends Component {
             />
           </div>
           <input type="submit" onSubmit={this.props.onSubmit} />
-          {this.props.logged ? <Redirect to="/chat" /> : null}
+          {this.props.logged && this.props.token !== '' ? (
+            <Redirect to="/chat" />
+          ) : null}
         </form>
       </LoginForm>
     );

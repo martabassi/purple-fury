@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
 class List extends Component {
+  componentDidUpdate() {
+    const heightScroll = document.querySelector('.List').scrollHeight;
+    document.querySelector('.List').scrollTop = heightScroll;
+  }
   render() {
     return (
       <div className={this.props.className}>
         <ul>
           {this.props.messages.map(message => {
-            console.log(message.username, this.props.username);
             return (
               <li className="messaggio" key={message._id}>
                 <strong>
