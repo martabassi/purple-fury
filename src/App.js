@@ -3,6 +3,7 @@ import './App.css';
 import List from './components/List/List';
 import TopBar from './components/List/TopBar';
 import Form from './components/Form/Form';
+import Message from './components/Form/Message';
 import openSocket from 'socket.io-client';
 import Users from './components/Users/Users';
 import TodoList from './components/Todo/TodoList';
@@ -144,7 +145,10 @@ class App extends Component {
   };
   onMessageReceived(data) {
     console.log('from-socket', data);
-    this.setState({ messages: this.state.messages.concat([data]) });
+    // this.notifyUser();
+    this.setState({
+      messages: this.state.messages.concat([data])
+    });
   }
 
   onChange = e => {
@@ -172,8 +176,15 @@ class App extends Component {
       value: ''
     });
   }
+  // notifyUser = () => {
+  //   this.state.users.map(el => {
+  //     this.state.value === `@${el.username}`
+  //       ? this.setState({ notify: el.username })
+  //       : null;
+  //   });
+  // };
+
   render() {
-    console.log('SELECTED MSG', this.state.selectedMsg);
     return (
       <div className="App">
         <div className="wrapper">
@@ -224,6 +235,9 @@ class App extends Component {
               this.state.selectedMsg !== [] ? this.state.selectedMsg : ''
             }
           />
+          {this.state.notify !== '' ? (
+            <Message notified={this.state.notify} />
+          ) : null}
         </div>
       </div>
     );

@@ -158,21 +158,24 @@ i {
 }
 
 .fotoUser {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
   background-color: #adadad;
-  border-radius: 8px 8px 8px 0px;
+  border-radius: 8px 8px 8px 8px;
   margin-right: 10px;
   text-align: center;
+  padding-top: 2%;
   font: 25px 'Montserrat', sans-serif;
   text-transform: capitalize;
 }
 
 .fotoRoom {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background-color: #adadad;
-  border-radius: 8px 8px 8px 0px;
+  border-radius: 8px 8px 8px 8px;
   margin-right: 10px;
   text-align: center;
   font: 24px 'Montserrat', sans-serif;

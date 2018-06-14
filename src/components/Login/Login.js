@@ -11,7 +11,7 @@ const LoginForm = styled.div`
     text-align: center;
     margin: 40px;
     font: 50px 'Montserrat', sans-serif;
-    font-weight: lighter;
+    font-weight: 300;
   }
 
   border: none;
