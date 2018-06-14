@@ -5,9 +5,10 @@ import TopBar from './components/List/TopBar';
 import Form from './components/Form/Form';
 import openSocket from 'socket.io-client';
 import Users from './components/Users/Users';
+import TodoList from './components/Todo/TodoList';
 
 class App extends Component {
-  state = { username: [], token: [], messages: [], value: '' };
+  state = { username: [], token: [], messages: [], value: '', rooms: [] };
   componentDidMount() {
     var self = this;
 
@@ -26,21 +27,28 @@ class App extends Component {
       .then(res => {
         self.setState({
           token: res.token,
-          username: this.state.username.concat([res.username])
+          value: '',
+          username: this.state.username.concat(res.username)
         });
-        console.log(res);
         const socket = openSocket(
           `https://purple-fury.now.sh/?token=${res.token}`
         );
         socket.on('messages', data => {
+          console.log(data);
           self.onMessageReceived(data);
+          self.onRoomCreated(data);
         });
       });
   }
 
   onMessageReceived(data) {
     console.log('from-socket', data);
-    this.setState({ messages: this.state.messages.concat([data]), value: '' });
+    this.setState({ messages: this.state.messages.concat([data]) });
+    console.log(this.state.messages);
+  }
+  onRoomCreated(data) {
+    console.log('from-socket', data.room);
+    this.setState({ room: this.state.rooms.concat(data.room) });
   }
   onChange = e => {
     this.setState({
@@ -65,14 +73,25 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Users className="Users" username={this.state.username} />
-        <List className="List" messages={this.state.messages} />
-        <TopBar className="TopBar" username={this.state.username} />
-        <Form
-          className="Form"
-          onChange={this.onChange}
-          onClick={e => this.sendMessage(e, this.state.value)}
-        />
+        <div className="wrapper">
+          <Users
+            className="Users"
+            room={this.state.messages}
+            username={this.state.username}
+          />
+          <List
+            className="List"
+            username={this.props.username}
+            messages={this.state.messages}
+          />
+          <TopBar className="TopBar" username={this.state.username} />
+          <Form
+            className="Form"
+            onChange={this.onChange}
+            onClick={e => this.sendMessage(e, this.state.value)}
+          />
+          <TodoList />
+        </div>
       </div>
     );
   }

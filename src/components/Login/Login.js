@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Form = styled.div`
+const LoginForm = styled.div`
   h1 {
     color: white;
     text-align: center;
@@ -14,7 +14,7 @@ const Form = styled.div`
 
   border: none;
   height: 100vh;
-  background: #fab1a0;
+  background: rgb(0, 154, 181);
   padding-top: 100px;
   form {
     padding: 10px;
@@ -24,11 +24,17 @@ const Form = styled.div`
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     background-color: transparent !important;
     width: 500px;
+    border-top-right-radius: 28px;
+    border-top-left-radius: 28px;
+    border-bottom-right-radius: 28px;
     text-align: center;
     input:first-child {
       border-bottom: 1px solid white;
       background-color: transparent;
       margin-bottom: 20px;
+      :focus {
+        outline: none;
+      }
     }
     input::placeholder {
       color: white;
@@ -45,8 +51,8 @@ class Login extends Component {
   render() {
     console.log(this.props);
     return (
-      <Form>
-        <h1>Welcome To Purple Furry!</h1>
+      <LoginForm>
+        <h1>Welcome To Purple Fury!</h1>
 
         <form onSubmit={this.props.onSubmit}>
           <p>Choose your nickname to start the chat!</p>
@@ -62,7 +68,7 @@ class Login extends Component {
           <input type="submit" onSubmit={this.props.onSubmit} />
           {this.props.logged ? <Redirect to="/chat" /> : null}
         </form>
-      </Form>
+      </LoginForm>
     );
   }
 }

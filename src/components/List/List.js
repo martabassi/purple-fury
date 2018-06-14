@@ -6,9 +6,14 @@ class List extends Component {
       <div className={this.props.className}>
         <ul>
           {this.props.messages.map(message => {
+            console.log(message.username, this.props.username);
             return (
-              <li key={message._id}>
-                {message.username}: {message.message}
+              <li className="messaggio" key={message._id}>
+                <strong>
+                  {message.username === this.props.username
+                    ? 'Me'
+                    : message.username}
+                </strong>: {message.message}
               </li>
             );
           })}

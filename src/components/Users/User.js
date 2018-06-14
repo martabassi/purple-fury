@@ -5,7 +5,7 @@ class User extends Component {
     return (
       <div className="User">
         <div className="users">
-          <div className="fotoUser" />
+          <div className="fotoUser">{this.props.user[0]}</div>
           {this.props.user}
         </div>
       </div>
