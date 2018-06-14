@@ -135,12 +135,14 @@ i {
 }
 
 .users {
-  height: 50px;
+ 
   /* grid-row: 3/4;
   grid-column: 2/3; */
   color: white;
-  display: flex;
+  height: 250px;
+  list-style: none;
   align-items: center;
+  overflow-y: auto;
   border-radius: 8px;
   padding: 10px 0px 10px 0px;
   margin: 10px 0px 10px 0px;
@@ -169,15 +171,34 @@ i {
   font: 24px 'Montserrat', sans-serif; 
   text-transform: capitalize;
 }
-
+.RoomsGroup {
+  height: 200px;
+  overflow-y: auto;
+}
 .room{
   color: white;
   display: flex;
-  align-items: center;
   padding: 10px 0px 10px 0px;
   margin: 10px 0px 10px 0px;
+  align-items: center;
   font: 14px 'Montserrat', sans-serif;
   border: 10px;
 }
 
+.RoomTitle {
+  display: flex;
+  justify-content: space-between;
+  
+}
+.RoomTitle i {
+  font-size: 20px;
+}
 
+.usersList {
+  display: flex;
+  align-items: center;
+}
+.usersList div {
+  display: inline-block;
+  margin: 10px;
+}

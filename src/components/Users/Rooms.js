@@ -7,6 +7,7 @@ class Rooms extends Component {
   render() {
     return (
       <div className="Rooms">
+      <div className="RoomsGroup">
         <div className="RoomTitle">
           <h2 style={{ color: 'white', fontWeight: 'lighter' }}>ROOMS</h2>
           <a onClick={() => this.setState({ clicked: !this.state.clicked })}>
@@ -24,6 +25,7 @@ class Rooms extends Component {
               );
             })
           : ''}
+          </div>
         {this.state.clicked === true ? (
           <form onSubmit={this.props.onSubmit}>
             <input type="text" onChange={this.props.onChange} />
@@ -32,7 +34,7 @@ class Rooms extends Component {
           ''
         )}
 
-        <p>{this.props.roomName}</p>
+        {/* <p>{this.props.roomName}</p> */}
       </div>
     );
   }
