@@ -45,7 +45,8 @@ class App extends Component {
         });
       });
     this.fetchRooms();
-
+    this.createPrivateRooms();
+    this.invitePeopleInPrivate();
     fetch(`https://purple-fury.now.sh/users?token=${this.props.token}`, {
       method: 'GET',
       headers: {
@@ -127,6 +128,53 @@ class App extends Component {
         );
       }, this.fetchRooms());
   };
+
+  createPrivateRooms = () => {
+    fetch('https://purple-fury.now.sh/rooms', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        room: 'putin',
+        token: this.props.token,
+        username: this.state.username,
+        name: 'putin',
+        topic: 'the most private room',
+        isPrivate: true
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        this.setState(
+          {
+            privateRooms: res
+          },
+          console.log(this.state.privateRooms)
+        );
+      }, this.fetchRooms());
+  };
+
+  invitePeopleInPrivate = () => {
+    fetch('https://purple-fury.now.sh/rooms/putin/users', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: this.props.token,
+        username: 'marta'
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      }, this.fetchRooms());
+  };
+
   fetchRooms = () => {
     fetch(`https://purple-fury.now.sh/rooms?token=${this.props.token}`, {
       method: 'GET',
@@ -150,6 +198,39 @@ class App extends Component {
       messages: this.state.messages.concat([data])
     });
   }
+
+  filterUsers = e => {
+    e.preventDefault();
+    const text = e.target.value.toLowerCase();
+    document.querySelectorAll('li').forEach(el => {
+      const item = el.textContent;
+      if (item.toLowerCase().indexOf(text) !== -1) {
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  };
+
+  findHashtag = e => {
+    let check = e.target.value;
+    if (check.includes('#') === true) {
+      alert('Trovato hashtag!');
+    }
+  };
+
+  // filterRooms = e => {
+  //   console.log(e.target.value);
+
+  //   var newArray = this.state.rooms.map(d => {
+  //     return d.room.indexOf(e.target.value) !== -1;
+
+  //   });
+  //   console.log(newArray);
+  //   this.setState({
+  //     rooms: newArray
+  //   });
+  // };
 
   onChange = e => {
     this.setState({
@@ -195,6 +276,8 @@ class App extends Component {
             }
             onChange={e => this.createRoom(e)}
             onSubmit={this.postRoomsonServer}
+            filter={e => this.filterUsers(e)}
+            filterRooms={e => this.filterRooms(e)}
             messages={
               this.state.selectedMsg !== [] ? this.state.selectedMsg : ''
             }
@@ -226,6 +309,7 @@ class App extends Component {
             user={this.state.users}
             room={this.state.rooms}
             value={this.state.value}
+            findHashtag={e => this.findHashtag(e)}
             onChange={this.onChange}
             onClick={e => this.sendMessage(e, this.state.value)}
           />

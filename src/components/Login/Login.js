@@ -7,16 +7,22 @@ const LoginForm = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
   h1 {
-    color: #034561;
+    color: #fff;
     text-align: center;
     margin: 40px;
     font: 50px 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-weight: lighter;
   }
 
   border: none;
   height: 100vh;
-  background: #00a89f;
+  background: linear-gradient(
+    to right,
+    #00a89f 1%,
+    #034561 30%,
+    #034561 60%,
+    #00a89f 100%
+  );
   padding-top: 100px;
   form {
     padding: 10px;
@@ -45,11 +51,11 @@ const LoginForm = styled.div`
       }
     }
     input::placeholder {
-      color: #2c6d7c;
+      color: #fff;
     }
 
     p {
-      color: #034561;
+      color: #fff;
       font: 20px 'Montserrat', sans-serif;
       margin-bottom: 30px;
       text-align: center;

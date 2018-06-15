@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 class Rooms extends Component {
   state = {
-    clicked: false
+    clicked: false,
+    searched: false
   };
 
   render() {
@@ -11,9 +12,16 @@ class Rooms extends Component {
       <div className="Rooms">
         <div className="RoomTitle">
           <h2 style={{ color: 'white', fontWeight: 'lighter' }}>ROOMS</h2>
-          <a onClick={() => this.setState({ clicked: !this.state.clicked })}>
-            <i className="fa fa-plus" style={{ color: 'white' }} />
-          </a>
+          <div className="icone">
+            <a onClick={() => this.setState({ clicked: !this.state.clicked })}>
+              <i className="fa fa-plus" style={{ color: 'white' }} />
+            </a>
+            <a
+              onClick={() => this.setState({ searched: !this.state.searched })}
+            >
+              <i className="fa fa-search" style={{ color: 'white' }} />
+            </a>
+          </div>
         </div>
 
         {this.state.clicked === true ? (
@@ -22,6 +30,18 @@ class Rooms extends Component {
               className="inputRooms"
               type="text"
               onChange={this.props.onChange}
+            />
+          </form>
+        ) : (
+          ''
+        )}
+
+        {this.state.searched === true ? (
+          <form className="formRooms" onSubmit={this.props.onSubmit}>
+            <input
+              className="inputRooms"
+              type="text"
+              onChange={this.props.filterRooms}
             />
           </form>
         ) : (
