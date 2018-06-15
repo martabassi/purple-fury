@@ -35,6 +35,7 @@ class Users extends Component {
         </div>
 
         <User
+          key={this.props.messages}
           user={this.props.users}
           messages={this.props.messages}
           username={this.props.username}

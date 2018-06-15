@@ -32,8 +32,10 @@ class Main extends Component {
   };
 
   onChange = e => {
+    e.preventDefault();
+    var newName = e.target.value;
     this.setState({
-      username: e.target.value
+      username: newName
     });
   };
 
@@ -72,6 +74,7 @@ class Main extends Component {
               <App
                 token={this.state.token}
                 username={this.state.username}
+                onChangeUser={e => this.onChange(e)}
                 logged={this.state.logged}
                 onClick={this.changeLogged}
               />

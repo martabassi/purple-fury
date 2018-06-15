@@ -37,7 +37,11 @@ class User extends Component {
             ? this.props.user.map(us => {
                 if (!us.isConnected) {
                   return (
-                    <li className={classnames('usersList', {})}>
+                    <li
+                      className={classnames('usersList', {
+                        offline: !us.isConnected
+                      })}
+                    >
                       <div className="fotoUser">{us.username[0]}</div>
                       {us.username}
                       {us.isConnected == true ? <small>online</small> : ''}

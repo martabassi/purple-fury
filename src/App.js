@@ -18,6 +18,7 @@ class App extends Component {
     roomName: '',
     rooms: [],
     roomClicked: '',
+    roomPrivate: '',
     selectedMsg: [],
     notify: ''
   };
@@ -30,7 +31,7 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.props.username,
+        username: this.state.username,
         password: 'secret'
       })
     })
@@ -45,8 +46,12 @@ class App extends Component {
         });
       });
     this.fetchRooms();
-    this.createPrivateRooms();
-    this.invitePeopleInPrivate();
+    // this.createPrivateRooms(e);
+
+    {
+      this.state.roomPrivate !== '' ? this.invitePeopleInPrivate() : null;
+    }
+
     fetch(`https://purple-fury.now.sh/users?token=${this.props.token}`, {
       method: 'GET',
       headers: {
@@ -62,11 +67,20 @@ class App extends Component {
       });
   }
   createRoom = e => {
-    e.preventDefault();
-    this.setState({
-      roomName: e.target.value
-    });
+    if (e.target.name !== 'private') {
+      e.preventDefault();
+      this.setState({
+        roomName: e.target.value
+      });
+    }
+    if (e.target.name === 'private') {
+      e.preventDefault();
+      this.setState({
+        roomPrivate: e.target.value
+      });
+    }
   };
+
   displayRoom = e => {
     this.setState(
       {
@@ -123,13 +137,18 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
+        this.setState({
+          roomName: ''
+        });
+
         const socket = openSocket(
           `https://purple-fury.now.sh/?token=${this.props.token}`
         );
       }, this.fetchRooms());
   };
 
-  createPrivateRooms = () => {
+  createPrivateRooms = e => {
+    e.preventDefault();
     fetch('https://purple-fury.now.sh/rooms', {
       method: 'post',
       headers: {
@@ -137,10 +156,10 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        room: 'putin',
+        room: this.state.roomPrivate,
         token: this.props.token,
-        username: this.state.username,
-        name: 'putin',
+        username: this.props.username,
+        name: this.state.roomPrivate,
         topic: 'the most private room',
         isPrivate: true
       })
@@ -156,9 +175,15 @@ class App extends Component {
         );
       }, this.fetchRooms());
   };
-
+  onChangeName = e => {
+    e.preventDefault();
+    var newName = e.target.value;
+    this.setState({
+      username: newName
+    });
+  };
   invitePeopleInPrivate = () => {
-    fetch('https://purple-fury.now.sh/rooms/putin/users', {
+    fetch(`https://purple-fury.now.sh/rooms/${this.state.roomPrivate}/users`, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -166,7 +191,7 @@ class App extends Component {
       },
       body: JSON.stringify({
         token: this.props.token,
-        username: 'marta'
+        username: 'vincenzo'
       })
     })
       .then(res => res.json())
@@ -205,7 +230,7 @@ class App extends Component {
     document.querySelectorAll('li').forEach(el => {
       const item = el.textContent;
       if (item.toLowerCase().indexOf(text) !== -1) {
-        el.style.display = 'block';
+        el.style.display = 'grid';
       } else {
         el.style.display = 'none';
       }
@@ -284,12 +309,12 @@ class App extends Component {
             rooms={this.state.rooms}
             users={this.state.users !== [] ? this.state.users : ''}
             onClick={this.displayRoom}
-            username={this.props.username}
+            username={this.state.username !== '' ? this.state.username : ''}
             roomName={this.state.roomName}
           />
           <List
             className="List"
-            username={this.props.username}
+            username={this.state.username}
             messages={this.state.messages !== [] ? this.state.messages : ''}
             roomClicked={
               this.state.roomClicked !== '' ? this.state.roomClicked : ''
@@ -297,7 +322,7 @@ class App extends Component {
           />
           <TopBar
             className="TopBar"
-            username={this.state.username}
+            username={this.state.username !== '' ? this.state.username : ''}
             logged={this.props.logged}
             messages={
               this.state.roomClicked !== '' ? this.state.roomClicked : ''
@@ -315,6 +340,12 @@ class App extends Component {
           />
           <TodoList
             logged={this.props.logged}
+            hashtag={e => this.props.findHashtag(e)}
+            onChangeRoom={e => this.createRoom(e)}
+            onSubmitRoom={this.postRoomsonServer}
+            onSubmitPrivate={e => this.createPrivateRooms(e)}
+            username={this.state.username}
+            onChangeUser={e => this.createPrivateRooms(e)}
             messages={
               this.state.selectedMsg !== [] ? this.state.selectedMsg : ''
             }

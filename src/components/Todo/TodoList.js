@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import UserProfile from './UserProfile';
+import TodoListItem from './TodoListItem';
 class TodoList extends Component {
   render() {
     console.log(this.props);
@@ -7,24 +8,22 @@ class TodoList extends Component {
       <div className="TodoList">
         <h2
           style={{
-            color: '#636e72',
+            color: 'white',
             fontWeight: 'lighter',
-            paddingBottom: '10px'
+            paddingBottom: '20px',
+            fontSize: '30px',
+            textAlign: 'center'
           }}
         >
-          TODO/NOTES
+          User Profile
         </h2>
-        <hr />
-        <div>
-          <ul>
-            {this.props.messages !== [] && this.props.logged === true
-              ? this.props.messages.map(el => {
-                  console.log(this.props.messages);
-                  return <li>{el.username}</li>;
-                })
-              : ''}
-          </ul>
-        </div>
+        <UserProfile
+          onChangeRoom={this.props.onChangeRoom}
+          onSubmitPrivate={this.props.onSubmitPrivate}
+          onSubmitRoom={this.props.onSubmitRoom}
+          username={this.props.username}
+        />
+        <TodoListItem />
       </div>
     );
   }
